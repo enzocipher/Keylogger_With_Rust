@@ -1,4 +1,4 @@
-# 🖥️ Keylogger in Rust
+# 🖥️ Keylogger with Rust
 
 Un simple keylogger escrito en Rust para fines educativos y de pruebas en entornos controlados.  
 Captura las pulsaciones del teclado y las envía a un Webhook (como Discord) en tiempo real.
